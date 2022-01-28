@@ -255,11 +255,33 @@ net.train([{
 });
 
 
+
 var result 
 for (j=0;j<res.length;j++){
-result = brain.likely(res[j], net);
+result = brain.likely(character(res[j][0]), net);
 console.log(result); 
 }
+
+
+
+
+
+
+function character(string) {
+  return string
+    .trim()
+    .split('')
+    .map(integer);
+}
+
+
+function integer(character) {
+  if ('#' === character) return 1;
+  return 0;
+}
+
+console.log(data);
+console.log(data);
 
 
 
