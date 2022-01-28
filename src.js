@@ -1,17 +1,15 @@
 const { get, getSync } = require('@andreekeberg/imagedata')
-var picture = [];
-var ting = [];
-var picture2 = [];
-var res
+const brain = require('brain.js')
+var res = []
 var str
 var result
+var res2 =[]
 var counter2 = 0;
 var finalData = []
 var finalData2 = []
 var data1 = []
 var aMatrix
-var parsedData =[]
-get('TheImage.png', (error, data) => {
+get('tti.png', (error, data) => {
     if (error) {
         console.log(error)
     } else {
@@ -19,8 +17,6 @@ get('TheImage.png', (error, data) => {
     }
       counter=0
 			counter2=1
-			var counterMultiplyer = 0
-			var counter3 = 0
 pixels = ["#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#","#",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".",".","."]
 length = data1.data.length
 for (j = 0; j < length-1; j+=4) {
@@ -76,18 +72,18 @@ multiplier = 1
 		for(j=0;j<7;j++){
 		 if(res[i][j].indexOf('.')==-1 && res[i][j].indexOf('#')==-1){
 			res[i][j] = ['.','.','.','.','.','.','.']
-			 console.log("deleted")
 		}
 		}
 	}
-	for(i=0;i<res.length;i++){
-		res[i]=res[i].toString()
-	}
-})
+  for(i=0;i<res.length;i++){
+    res2.push([])
+    res2[i].push(res[i].toString())
+    res2[i][0]=res2[i][0].split(",").join("")
+  }
+
+
 
 //========================================================
-
-const brain = require('brain.js')
 const a = character(
   '#......' +
   '#......' +
@@ -166,7 +162,7 @@ const h = character(
   '.......'
 );
 
-const i = character(
+const o = character(
   '.......' +
   '.......' +
   '.......' +
@@ -238,9 +234,9 @@ net.train([{
     }
   },
   {
-    input: i,
+    input: o,
     output: {
-      i: 1
+      o: 1
     }
   },
   
@@ -254,13 +250,12 @@ net.train([{
 ], {
 });
 
-
-
-var result 
-for (j=0;j<res.length;j++){
-result = brain.likely(character(res[j][0]), net);
-console.log(result); 
+console.log(res2)
+var result = ""
+for(j=0;j<res2.length-1;j++){
+  result += brain.likely(character(res2[j][0]), net);
 }
+console.log(result.length); 
 
 
 
@@ -280,8 +275,6 @@ function integer(character) {
   return 0;
 }
 
-console.log(data);
-console.log(data);
 
 
 
@@ -300,6 +293,4 @@ function integer(character) {
   if ('#' === character) return 1;
   return 0;
 }
-
-console.log(data);
-console.log(data);
+})
